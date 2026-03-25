@@ -4,7 +4,6 @@
   <asx:values>
    <DEVC>
     <CTEXT>ZYEC1 Package</CTEXT>
-    <PARENTCL>ZTEST01</PARENTCL>
    </DEVC>
   </asx:values>
  </asx:abap>
