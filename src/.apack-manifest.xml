@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<apack-manifest xlmns="http://www.sap.com/pack/apack">
+  <component_descriptor>
+    <component_id>github.com/ynsemrecoskun1/sap-rap-ai-demo</component_id>
+    <component_version>1.0.0</component_version>
+  </component_descriptor>
+</apack-manifest>
