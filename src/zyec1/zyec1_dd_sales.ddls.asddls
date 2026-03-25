@@ -9,5 +9,7 @@ define view entity zyec1_dd_sales
       h.SalesOrganization,
       h.SoldToParty,
       h.CreationDate,
-      h.TotalNetAmount
+      @Semantics.amount.currencyCode: 'TransactionCurrency'
+      h.TotalNetAmount,
+      h.TransactionCurrency
 }
