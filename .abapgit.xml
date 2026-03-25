@@ -6,12 +6,6 @@
     <MASTER_LANGUAGE>E</MASTER_LANGUAGE>
     <STARTING_FOLDER>/src/</STARTING_FOLDER>
     <FOLDER_LOGIC>PREFIX</FOLDER_LOGIC>
-    <IGNORE>
-     <item>/.gitignore</item>
-     <item>/README.md</item>
-     <item>/LICENSE</item>
-     <item>/src/.apack-manifest.xml</item>
-    </IGNORE>
    </DATA>
   </asx:values>
  </asx:abap>
