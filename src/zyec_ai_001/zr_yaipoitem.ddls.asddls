@@ -1,26 +1,21 @@
-@AbapCatalog.viewEnhancementCategory: [#NONE]
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Purchase Order Item - Base View'
-@ObjectModel.usageType: {
-  serviceQuality: #X,
-  sizeCategory: #M,
-  dataClass: #MIXED
-}
 define view entity ZR_YAIPOITEM
-  as select from I_PurchaseOrderItem as poi
+  as select from zyai_po_i as i
   association to parent ZR_YAIPOHEADER as _Header
-    on $projection.PurchaseOrder = _Header.PurchaseOrder
+    on $projection.PoUUID = _Header.PoUUID
 {
-  key poi.PurchaseOrder          as PurchaseOrder,
-  key poi.PurchaseOrderItem      as PurchaseOrderItem,
-      poi.Plant                  as Plant,
-      poi.Material               as Material,
-      poi.PurchaseOrderItemText  as PurchaseOrderItemText,
-      poi.OrderQuantity          as OrderQuantity,
-      poi.PurchaseOrderQuantityUnit as PurchaseOrderQuantityUnit,
-      @Semantics.amount.currencyCode: 'DocumentCurrency'
-      poi.NetPriceAmount         as NetPriceAmount,
-      poi.DocumentCurrency       as DocumentCurrency,
+  key i.itemuuid              as ItemUUID,
+      i.pouuid                as PoUUID,
+      i.itemid                as ItemId,
+      i.material              as Material,
+      i.orderqty              as OrderQty,
+      i.uom                   as Uom,
+      @Semantics.amount.currencyCode: 'Currency'
+      i.netprice              as NetPrice,
+      i.uom                   as Currency,
+      @Semantics.systemDateTime.localInstanceLastChangedAt: true
+      i.local_last_changed_at as LocalLastChangedAt,
 
       _Header
 }
