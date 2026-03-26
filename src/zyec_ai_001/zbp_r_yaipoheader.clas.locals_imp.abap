@@ -32,6 +32,7 @@ CLASS lhc_poheader IMPLEMENTATION.
     ENDIF.
 
     DATA lt_log TYPE TABLE OF zyai_po_log.
+    GET TIME STAMP FIELD DATA(lv_ts).
 
     LOOP AT lt_pos INTO DATA(ls_po).
       APPEND VALUE zyai_po_log(
@@ -39,7 +40,7 @@ CLASS lhc_poheader IMPLEMENTATION.
         purchaseorder = ls_po-purchaseorder
         supplier      = ls_po-supplier
         companycode   = ls_po-companycode
-        deleted_at    = cl_abap_context_info=>get_system_time_stamp( )
+        deleted_at    = lv_ts
         deleted_by    = cl_abap_context_info=>get_user_alias( )
       ) TO lt_log.
     ENDLOOP.
