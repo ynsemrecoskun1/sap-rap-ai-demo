@@ -1,6 +1,6 @@
 @AbapCatalog.viewEnhancementCategory: [#NONE]
 @AccessControl.authorizationCheck: #NOT_REQUIRED
-@EndUserText.label: 'Purchase Order Header - Base View'
+@EndUserText.label: 'PO Header - Base View'
 @ObjectModel.usageType: {
   serviceQuality: #X,
   sizeCategory: #M,
