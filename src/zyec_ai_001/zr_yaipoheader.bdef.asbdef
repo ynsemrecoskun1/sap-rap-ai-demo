@@ -5,7 +5,7 @@ define behavior for ZR_YAIPOHEADER alias poheader
 lock master
 authorization master ( global )
 {
-  field ( readonly ) PurchaseOrder, IsDeleted, DeletionCriticality;
+  field ( readonly ) PurchaseOrder;
 
   action DeleteOrder result [1] $self;
 
