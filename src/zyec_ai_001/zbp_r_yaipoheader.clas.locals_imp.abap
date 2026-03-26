@@ -48,10 +48,10 @@ CLASS lhc_poheader IMPLEMENTATION.
       INTO CORRESPONDING FIELDS OF TABLE @result.
 
     LOOP AT result ASSIGNING FIELD-SYMBOL(<ls_result>).
-      IF line_exists( lt_log_pos[ table_line = <ls_result>-PurchaseOrder ] ).
-        <ls_result>-IsDeleted = 'X'.
+      IF line_exists( lt_log_pos[ table_line = <ls_result>-%data-PurchaseOrder ] ).
+        <ls_result>-%data-IsDeleted = 'X'.
       ELSE.
-        <ls_result>-IsDeleted = ' '.
+        <ls_result>-%data-IsDeleted = ' '.
       ENDIF.
     ENDLOOP.
   ENDMETHOD.
