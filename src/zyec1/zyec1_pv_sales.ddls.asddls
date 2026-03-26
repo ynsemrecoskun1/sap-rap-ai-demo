@@ -7,15 +7,15 @@
     sizeCategory: #S,
     dataClass: #MIXED
 }
-define root view entity zyec1_pv_sales
-  as select from I_SalesOrder as h
+define view entity zyec1_pv_sales
+  as select from zyec1_dd_sales
 {
-  key h.SalesOrder,
-      h.SalesOrderType,
-      h.SalesOrganization,
-      h.SoldToParty,
-      h.CreationDate,
+  key SalesOrder,
+      SalesOrderType,
+      SalesOrganization,
+      SoldToParty,
+      CreationDate,
       @Semantics.amount.currencyCode: 'TransactionCurrency'
-      h.TotalNetAmount,
-      h.TransactionCurrency
+      TotalNetAmount,
+      TransactionCurrency
 }

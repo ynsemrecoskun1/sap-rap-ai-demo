@@ -6,8 +6,7 @@
 annotate view zyec1_pv_sales with
 {
   @UI.lineItem: [
-    { position: 10, label: 'Sales Order', importance: #HIGH },
-    { type: #FOR_ACTION, dataAction: 'showOrder', label: 'Show Order' }
+    { position: 10, label: 'Sales Order', importance: #HIGH }
   ]
   @UI.selectionField: [{ position: 10 }]
   SalesOrder;
