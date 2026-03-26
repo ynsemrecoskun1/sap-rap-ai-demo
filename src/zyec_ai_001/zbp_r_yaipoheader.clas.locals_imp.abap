@@ -1,15 +1,20 @@
 CLASS lhc_poheader DEFINITION INHERITING FROM cl_abap_behavior_handler.
   PRIVATE SECTION.
     METHODS:
-      get_instance_authorizations FOR INSTANCE AUTHORIZATION
-        IMPORTING keys REQUEST requested_authorizations FOR poheader RESULT result,
+      get_global_authorizations FOR GLOBAL AUTHORIZATION
+        IMPORTING REQUEST requested_authorizations FOR poheader RESULT result,
+      lock_master FOR LOCK
+        IMPORTING keys FOR LOCK poheader,
       deleteorder FOR MODIFY
         IMPORTING keys FOR ACTION poheader~deleteorder RESULT result.
 ENDCLASS.
 
 CLASS lhc_poheader IMPLEMENTATION.
 
-  METHOD get_instance_authorizations.
+  METHOD get_global_authorizations.
+  ENDMETHOD.
+
+  METHOD lock_master.
   ENDMETHOD.
 
   METHOD deleteorder.

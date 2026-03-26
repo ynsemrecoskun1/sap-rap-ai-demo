@@ -3,7 +3,7 @@ strict ( 2 );
 
 define behavior for ZR_YAIPOHEADER alias poheader
 lock master
-authorization master ( instance )
+authorization master ( global )
 {
   field ( readonly ) PurchaseOrder;
 
