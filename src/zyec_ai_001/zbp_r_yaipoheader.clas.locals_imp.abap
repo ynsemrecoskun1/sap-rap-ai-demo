@@ -1,4 +1,6 @@
 CLASS lhc_poheader DEFINITION INHERITING FROM cl_abap_behavior_handler.
+  PUBLIC SECTION.
+    CLASS-DATA mt_log_buffer TYPE TABLE OF zyai_po_log.
   PRIVATE SECTION.
     METHODS:
       get_global_authorizations FOR GLOBAL AUTHORIZATION
@@ -65,7 +67,7 @@ CLASS lhc_poheader IMPLEMENTATION.
         companycode   = ls_po-companycode
         deleted_at    = lv_ts
         deleted_by    = cl_abap_context_info=>get_user_alias( )
-      ) TO lsc_zr_yaipoheader=>mt_log_buffer.
+      ) TO lhc_poheader=>mt_log_buffer.
     ENDLOOP.
 
     LOOP AT lt_pos INTO DATA(ls_po_result).
@@ -82,8 +84,6 @@ ENDCLASS.
 
 
 CLASS lsc_zr_yaipoheader DEFINITION INHERITING FROM cl_abap_behavior_saver.
-  PUBLIC SECTION.
-    CLASS-DATA mt_log_buffer TYPE TABLE OF zyai_po_log.
   PROTECTED SECTION.
     METHODS save             REDEFINITION.
     METHODS cleanup          REDEFINITION.
@@ -93,18 +93,18 @@ ENDCLASS.
 CLASS lsc_zr_yaipoheader IMPLEMENTATION.
 
   METHOD save.
-    IF mt_log_buffer IS NOT INITIAL.
-      INSERT zyai_po_log FROM TABLE @mt_log_buffer.
-      CLEAR mt_log_buffer.
+    IF lhc_poheader=>mt_log_buffer IS NOT INITIAL.
+      INSERT zyai_po_log FROM TABLE @lhc_poheader=>mt_log_buffer.
+      CLEAR lhc_poheader=>mt_log_buffer.
     ENDIF.
   ENDMETHOD.
 
   METHOD cleanup.
-    CLEAR mt_log_buffer.
+    CLEAR lhc_poheader=>mt_log_buffer.
   ENDMETHOD.
 
   METHOD cleanup_finalize.
-    CLEAR mt_log_buffer.
+    CLEAR lhc_poheader=>mt_log_buffer.
   ENDMETHOD.
 
 ENDCLASS.
