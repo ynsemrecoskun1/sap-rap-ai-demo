@@ -26,6 +26,9 @@ CLASS lhc_poheader IMPLEMENTATION.
       RETURN.
     ENDIF.
 
+    DATA lt_po_range TYPE RANGE OF i_purchaseorderapi01-PurchaseOrder.
+    lt_po_range = VALUE #( FOR key IN keys ( sign = 'I' option = 'EQ' low = key-PurchaseOrder ) ).
+
     SELECT FROM I_PurchaseOrderAPI01 AS po
       LEFT OUTER JOIN zyai_po_log AS log
         ON po~PurchaseOrder = log~purchaseorder
@@ -41,8 +44,7 @@ CLASS lhc_poheader IMPLEMENTATION.
              po~PurchaseOrderDate,
              CASE WHEN log~purchaseorder IS NOT NULL THEN 'X' ELSE ' ' END AS IsDeleted,
              CASE WHEN log~purchaseorder IS NOT NULL THEN 1 ELSE 3 END AS DeletionCriticality
-      FOR ALL ENTRIES IN @keys
-      WHERE po~PurchaseOrder = @keys-PurchaseOrder
+      WHERE po~PurchaseOrder IN @lt_po_range
       INTO CORRESPONDING FIELDS OF TABLE @result.
   ENDMETHOD.
 
