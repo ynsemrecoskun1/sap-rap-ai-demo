@@ -11,9 +11,7 @@ define view entity ZR_YAIPOITEM
       i.material              as Material,
       i.orderqty              as OrderQty,
       i.uom                   as Uom,
-      @Semantics.amount.currencyCode: 'Currency'
       i.netprice              as NetPrice,
-      i.uom                   as Currency,
       @Semantics.systemDateTime.localInstanceLastChangedAt: true
       i.local_last_changed_at as LocalLastChangedAt,
 

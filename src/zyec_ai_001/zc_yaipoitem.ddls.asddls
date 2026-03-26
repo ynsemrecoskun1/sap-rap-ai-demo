@@ -11,7 +11,6 @@ define view entity ZC_YAIPOITEM
       OrderQty,
       Uom,
       NetPrice,
-      Currency,
       LocalLastChangedAt,
 
       _Header : redirected to parent ZC_YAIPOHEADER
