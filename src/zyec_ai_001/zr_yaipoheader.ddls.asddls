@@ -21,6 +21,7 @@ define root view entity ZR_YAIPOHEADER
       po.CreatedByUser          as CreatedByUser,
       po.CreationDate           as CreationDate,
       po.PurchaseOrderDate      as PurchaseOrderDate,
+      po.TotalNetAmount         as TotalNetAmount,
 
       cast( case when log.purchaseorder is not initial
         then 'X'
