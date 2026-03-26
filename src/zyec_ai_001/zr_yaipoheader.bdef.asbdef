@@ -5,6 +5,8 @@ define behavior for ZR_YAIPOHEADER alias poheader
 lock master
 authorization master ( instance )
 {
+  field ( readonly ) PurchaseOrder;
+
   action DeleteOrder result [1] $self;
 
   association _Item;
@@ -14,5 +16,7 @@ define behavior for ZR_YAIPOITEM alias poitem
 lock dependent by _Header
 authorization dependent by _Header
 {
+  field ( readonly ) PurchaseOrder, PurchaseOrderItem;
+
   association _Header;
 }
