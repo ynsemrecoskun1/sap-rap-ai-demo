@@ -7,7 +7,7 @@
   dataClass: #MIXED
 }
 define root view entity ZR_YAIPOHEADER
-  as select from I_PurchaseOrder as po
+  as select from I_PurchaseOrderAPI01 as po
   composition [0..*] of ZR_YAIPOITEM as _Item
 {
   key po.PurchaseOrder          as PurchaseOrder,

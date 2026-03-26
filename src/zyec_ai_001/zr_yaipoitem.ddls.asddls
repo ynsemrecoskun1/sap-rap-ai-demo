@@ -7,7 +7,7 @@
   dataClass: #MIXED
 }
 define view entity ZR_YAIPOITEM
-  as select from I_PurchaseOrderItem as poi
+  as select from I_PurchaseOrderItemAPI01 as poi
   association to parent ZR_YAIPOHEADER as _Header
     on $projection.PurchaseOrder = _Header.PurchaseOrder
 {
