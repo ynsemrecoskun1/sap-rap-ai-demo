@@ -16,7 +16,6 @@ define root view entity ZC_YAIPOHEADER
       CreationDate,
       PurchaseOrderDate,
       IsDeleted,
-      DeletionCriticality,
 
       _Item : redirected to composition child ZC_YAIPOITEM
 }

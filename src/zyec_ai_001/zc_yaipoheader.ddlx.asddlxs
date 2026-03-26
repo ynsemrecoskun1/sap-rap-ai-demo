@@ -87,9 +87,6 @@ annotate view ZC_YAIPOHEADER with
   @UI.identification: [ { position: 100, label: 'Deleted' } ]
   IsDeleted;
 
-  @UI.lineItem: [ { position: 110, importance: #HIGH, label: 'Status', criticality: 'DeletionCriticality', criticalityRepresentation: #WITH_ICON } ]
-  DeletionCriticality;
-
   @UI.hidden: true
   PurchaseOrderDate;
 }
