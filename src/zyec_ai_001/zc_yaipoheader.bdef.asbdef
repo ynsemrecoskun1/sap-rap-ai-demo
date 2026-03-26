@@ -4,20 +4,13 @@ strict ( 2 );
 define behavior for ZC_YAIPOHEADER alias poheader
 use etag
 {
-  use create;
-  use update;
-  use delete;
-
   use action DeleteOrder;
 
-  use association _Item { create; }
+  use association _Item;
 }
 
 define behavior for ZC_YAIPOITEM alias poitem
 use etag
 {
-  use update;
-  use delete;
-
   use association _Header;
 }
