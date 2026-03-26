@@ -35,7 +35,7 @@ CLASS lhc_poheader IMPLEMENTATION.
              po~CreatedByUser,
              po~CreationDate,
              po~PurchaseOrderDate,
-             CASE WHEN log~purchaseorder IS NOT NULL THEN 'X' ELSE '' END AS IsDeleted,
+             CASE WHEN log~purchaseorder IS NOT NULL THEN 'X' ELSE ' ' END AS IsDeleted,
              CASE WHEN log~purchaseorder IS NOT NULL THEN 1 ELSE 3 END AS DeletionCriticality
       FOR ALL ENTRIES IN @keys
       WHERE po~PurchaseOrder = @keys-PurchaseOrder

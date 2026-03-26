@@ -87,9 +87,9 @@ annotate view ZC_YAIPOHEADER with
   @UI.selectionField: [ { position: 40 } ]
   CreationDate;
 
-  @UI.lineItem: [ { position: 100, importance: #HIGH, label: 'Deleted', criticalityRepresentation: #WITH_ICON } ]
+  @UI.dataPoint: { criticality: #CRITICAL, criticalityRepresentation: #WITH_ICON }
+  @UI.lineItem: [ { position: 100, importance: #HIGH, label: 'Deleted', type: #AS_DATAPOINT } ]
   @UI.identification: [ { position: 100, label: 'Deleted' } ]
-  @UI.criticality: 'DeletionCriticality'
   IsDeleted;
 
   @UI.hidden: true
