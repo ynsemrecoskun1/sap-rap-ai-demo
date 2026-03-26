@@ -1,4 +1,3 @@
-@AbapCatalog.viewEnhancementCategory: [#NONE]
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Purchase Order Header - Projection View'
 @Metadata.allowExtensions: true
@@ -6,16 +5,17 @@ define root view entity ZC_YAIPOHEADER
   provider contract transactional_query
   as projection on ZR_YAIPOHEADER
 {
-  key PurchaseOrder,
-      PurchaseOrderType,
+  key PoUUID,
+      PoId,
       Supplier,
-      CompanyCode,
-      PurchasingOrganization,
-      PurchasingGroup,
-      DocumentCurrency,
-      CreatedByUser,
-      CreationDate,
-      PurchaseOrderDate,
+      Status,
+      TotalAmount,
+      Currency,
+      CreatedBy,
+      CreatedAt,
+      LastChangedBy,
+      LastChangedAt,
+      LocalLastChangedAt,
 
       _Item : redirected to composition child ZC_YAIPOITEM
 }

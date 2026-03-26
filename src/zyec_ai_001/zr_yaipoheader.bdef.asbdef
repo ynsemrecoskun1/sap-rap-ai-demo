@@ -1,18 +1,75 @@
-unmanaged implementation in class zbp_r_yaipoheader unique;
+managed implementation in class zbp_r_yaipoheader unique;
 strict ( 2 );
 
 define behavior for ZR_YAIPOHEADER alias poheader
+persistent table zyai_po_h
 lock master
 authorization master ( instance )
+etag master LocalLastChangedAt
 {
+  field ( readonly )
+  PoUUID,
+  CreatedBy,
+  CreatedAt,
+  LastChangedBy,
+  LastChangedAt,
+  LocalLastChangedAt;
+
+  field ( numbering : managed )
+  PoUUID;
+
+  create;
+  update;
+  delete;
+
   action DeleteOrder result [1] $self;
 
-  association _Item;
+  association _Item { create; }
+
+  mapping for zyai_po_h
+  {
+    PoUUID              = POUUID;
+    PoId                = POID;
+    Supplier            = SUPPLIER;
+    Status              = STATUS;
+    TotalAmount         = TOTALAMOUNT;
+    Currency            = CURRENCY;
+    CreatedBy           = CREATED_BY;
+    CreatedAt           = CREATED_AT;
+    LastChangedBy       = LAST_CHANGED_BY;
+    LastChangedAt       = LAST_CHANGED_AT;
+    LocalLastChangedAt  = LOCAL_LAST_CHANGED_AT;
+  }
 }
 
 define behavior for ZR_YAIPOITEM alias poitem
+persistent table zyai_po_i
 lock dependent by _Header
 authorization dependent by _Header
+etag master LocalLastChangedAt
 {
+  field ( readonly )
+  ItemUUID,
+  PoUUID,
+  LocalLastChangedAt;
+
+  field ( numbering : managed )
+  ItemUUID;
+
+  update;
+  delete;
+
   association _Header;
+
+  mapping for zyai_po_i
+  {
+    ItemUUID            = ITEMUUID;
+    PoUUID              = POUUID;
+    ItemId              = ITEMID;
+    Material            = MATERIAL;
+    OrderQty            = ORDERQTY;
+    Uom                 = UOM;
+    NetPrice            = NETPRICE;
+    LocalLastChangedAt  = LOCAL_LAST_CHANGED_AT;
+  }
 }
