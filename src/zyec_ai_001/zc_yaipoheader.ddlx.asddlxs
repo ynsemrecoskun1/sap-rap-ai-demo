@@ -88,8 +88,5 @@ annotate view ZC_YAIPOHEADER with
   IsDeleted;
 
   @UI.hidden: true
-  DeletionCriticality;
-
-  @UI.hidden: true
   PurchaseOrderDate;
 }

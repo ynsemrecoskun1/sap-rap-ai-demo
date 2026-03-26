@@ -22,15 +22,15 @@ define root view entity ZR_YAIPOHEADER
       po.CreationDate           as CreationDate,
       po.PurchaseOrderDate      as PurchaseOrderDate,
 
-      case when log.purchaseorder is not initial
+      cast( case when log.purchaseorder is not initial
         then 'X'
         else ' '
-      end                       as IsDeleted,
+      end as abap.char1 )       as IsDeleted,
 
-      case when log.purchaseorder is not initial
+      cast( case when log.purchaseorder is not initial
         then 1
         else 3
-      end                       as DeletionCriticality,
+      end as abap.int1 )        as DeletionCriticality,
 
       _Item
 }
