@@ -1,0 +1,7 @@
+projection;
+strict ( 1 );
+
+define behavior for zyec1_pv_sales
+{
+  use action showOrder;
+}

@@ -1,0 +1,10 @@
+unmanaged implementation in class zbp_yec1_dd_sales unique;
+strict ( 1 );
+
+define behavior for zyec1_dd_sales
+lock master
+authorization master ( instance )
+{
+  action showOrder;
+  field ( readonly ) SalesOrder, SalesOrderType, SalesOrganization, SoldToParty, CreationDate, TotalNetAmount, TransactionCurrency;
+}

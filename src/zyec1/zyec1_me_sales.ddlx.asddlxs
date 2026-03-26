@@ -1,0 +1,35 @@
+@Metadata.layer: #CUSTOMER
+@UI.headerInfo: {
+    typeName: 'Sales Order',
+    typeNamePlural: 'Sales Orders'
+}
+annotate view zyec1_pv_sales with
+{
+  @UI.lineItem: [
+    { position: 10, label: 'Sales Order' },
+    { type: #FOR_ACTION, dataAction: 'showOrder', label: 'Show Order', position: 20 }
+  ]
+  @UI.selectionField: [{ position: 10 }]
+  SalesOrder;
+
+  @UI.lineItem: [{ position: 30, label: 'Order Type' }]
+  @UI.selectionField: [{ position: 20 }]
+  SalesOrderType;
+
+  @UI.lineItem: [{ position: 40, label: 'Sales Org.' }]
+  SalesOrganization;
+
+  @UI.lineItem: [{ position: 50, label: 'Sold To Party' }]
+  @UI.selectionField: [{ position: 30 }]
+  SoldToParty;
+
+  @UI.lineItem: [{ position: 60, label: 'Creation Date' }]
+  @UI.selectionField: [{ position: 40 }]
+  CreationDate;
+
+  @UI.lineItem: [{ position: 70, label: 'Net Amount' }]
+  TotalNetAmount;
+
+  @UI.hidden: true
+  TransactionCurrency;
+}

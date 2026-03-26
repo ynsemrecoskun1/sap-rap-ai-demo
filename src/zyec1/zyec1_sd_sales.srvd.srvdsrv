@@ -1,4 +1,4 @@
 @EndUserText.label: 'Sales Order Service Definition'
 define service Zyec1_sd_sales {
-  expose zyec1_dd_sales;
+  expose zyec1_pv_sales;
 }
