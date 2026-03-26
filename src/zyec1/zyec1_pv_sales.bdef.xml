@@ -5,7 +5,7 @@
    <BDEF>
     <DEFNAME>ZYEC1_PV_SALES</DEFNAME>
     <DDLANGUAGE>E</DDLANGUAGE>
-    <DDTEXT>Sales Order Projection Behavior Definition</DDTEXT>
+    <DDTEXT>Sales Order Behavior Definition</DDTEXT>
    </BDEF>
   </asx:values>
  </asx:abap>
