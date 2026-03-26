@@ -55,5 +55,8 @@ annotate view ZC_YAIPOITEM with
   PoUUID;
 
   @UI.hidden: true
+  Currency;
+
+  @UI.hidden: true
   LocalLastChangedAt;
 }

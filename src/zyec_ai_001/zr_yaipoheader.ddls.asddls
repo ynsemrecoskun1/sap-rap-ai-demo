@@ -8,6 +8,7 @@ define root view entity ZR_YAIPOHEADER
       h.poid               as PoId,
       h.supplier           as Supplier,
       h.status             as Status,
+      @Semantics.amount.currencyCode: 'Currency'
       h.totalamount        as TotalAmount,
       h.currency           as Currency,
       @Semantics.user.createdBy: true
