@@ -7,8 +7,7 @@
     sizeCategory: #S,
     dataClass: #MIXED
 }
-define root view entity zyec1_pv_sales
-  provider contract transactional_query
+define view entity zyec1_pv_sales
   as projection on zyec1_dd_sales
 {
   key SalesOrder,
