@@ -1,6 +1,6 @@
 @AbapCatalog.viewEnhancementCategory: [#NONE]
 @AccessControl.authorizationCheck: #NOT_REQUIRED
-@EndUserText.label: 'Sales Order Projection View'
+@EndUserText.label: 'Sales Order View'
 @Metadata.allowExtensions: true
 @ObjectModel.usageType:{
     serviceQuality: #X,
@@ -8,15 +8,14 @@
     dataClass: #MIXED
 }
 define root view entity zyec1_pv_sales
-  provider contract transactional_query
-  as select from zyec1_dd_sales
+  as select from I_SalesOrder as h
 {
-  key SalesOrder,
-      SalesOrderType,
-      SalesOrganization,
-      SoldToParty,
-      CreationDate,
+  key h.SalesOrder,
+      h.SalesOrderType,
+      h.SalesOrganization,
+      h.SoldToParty,
+      h.CreationDate,
       @Semantics.amount.currencyCode: 'TransactionCurrency'
-      TotalNetAmount,
-      TransactionCurrency
+      h.TotalNetAmount,
+      h.TransactionCurrency
 }
