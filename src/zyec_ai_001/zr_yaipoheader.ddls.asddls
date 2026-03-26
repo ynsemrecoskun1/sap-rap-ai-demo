@@ -25,7 +25,7 @@ define root view entity ZR_YAIPOHEADER
 
       case when log.purchaseorder is not initial
         then 'X'
-        else ''
+        else ' '
       end                       as IsDeleted,
 
       case when log.purchaseorder is not initial

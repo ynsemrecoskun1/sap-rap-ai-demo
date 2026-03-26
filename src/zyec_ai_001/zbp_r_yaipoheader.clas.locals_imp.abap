@@ -22,8 +22,9 @@ CLASS lhc_poheader IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD read.
-    DATA lt_po_keys TYPE TABLE OF i_purchaseorderapi01-PurchaseOrder.
-    lt_po_keys = VALUE #( FOR key IN keys ( key-PurchaseOrder ) ).
+    IF keys IS INITIAL.
+      RETURN.
+    ENDIF.
 
     SELECT FROM I_PurchaseOrderAPI01 AS po
       LEFT OUTER JOIN zyai_po_log AS log
@@ -40,7 +41,8 @@ CLASS lhc_poheader IMPLEMENTATION.
              po~PurchaseOrderDate,
              CASE WHEN log~purchaseorder IS NOT NULL THEN 'X' ELSE ' ' END AS IsDeleted,
              CASE WHEN log~purchaseorder IS NOT NULL THEN 1 ELSE 3 END AS DeletionCriticality
-      WHERE po~PurchaseOrder IN @lt_po_keys
+      FOR ALL ENTRIES IN @keys
+      WHERE po~PurchaseOrder = @keys-PurchaseOrder
       INTO CORRESPONDING FIELDS OF TABLE @result.
   ENDMETHOD.
 
