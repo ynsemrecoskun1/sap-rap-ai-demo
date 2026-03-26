@@ -1,6 +1,5 @@
 unmanaged implementation in class zbp_r_yaipoheader unique;
 strict ( 2 );
-with unmanaged save;
 
 define behavior for ZR_YAIPOHEADER alias poheader
 lock master
