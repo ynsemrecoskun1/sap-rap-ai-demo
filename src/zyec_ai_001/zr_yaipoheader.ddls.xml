@@ -5,7 +5,7 @@
    <DDLS>
     <DDLNAME>ZR_YAIPOHEADER</DDLNAME>
     <DDLANGUAGE>E</DDLANGUAGE>
-    <DDTEXT>Purchase Order Header - Base View</DDTEXT>
+     <DDTEXT>PO Header - Base View</DDTEXT>
     <SOURCE_TYPE>W</SOURCE_TYPE>
    </DDLS>
   </asx:values>
