@@ -6,6 +6,7 @@ lock master
 authorization master ( global )
 {
   field ( readonly ) PurchaseOrder;
+  field ( readonly ) IsDeleted;
 
   action DeleteOrder result [1] $self;
 
