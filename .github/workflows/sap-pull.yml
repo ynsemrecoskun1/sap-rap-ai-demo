@@ -1,0 +1,21 @@
+name: SAP abapGit Pull
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger abapGit Pull
+        run: |
+          curl -X POST \
+            "${{ secrets.SAP_HOST }}/sap/bc/adt/abapgit/repos/${{ secrets.SAP_REPO_KEY }}/pulls" \
+            -H "Accept: application/vnd.sap.adt.abapgit.repo.pull.v1+xml" \
+            -H "Content-Type: application/vnd.sap.adt.abapgit.repo.pull.v1+xml" \
+            -u "${{ secrets.SAP_USER }}:${{ secrets.SAP_PASSWORD }}" \
+            -d '<?xml version="1.0" encoding="UTF-8"?><repositories xmlns="http://www.sap.com/adt/abapgit"><repository><branch>main</branch></repository></repositories>' \
+            --fail \
+            -v
