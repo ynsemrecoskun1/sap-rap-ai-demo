@@ -5,6 +5,8 @@ CLASS lhc_poheader DEFINITION INHERITING FROM cl_abap_behavior_handler.
         IMPORTING REQUEST requested_authorizations FOR poheader RESULT result,
       lock_master FOR LOCK
         IMPORTING keys FOR LOCK poheader,
+      read FOR READ
+        IMPORTING keys FOR READ poheader RESULT result,
       deleteorder FOR MODIFY
         IMPORTING keys FOR ACTION poheader~deleteorder RESULT result.
 ENDCLASS.
@@ -15,6 +17,23 @@ CLASS lhc_poheader IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD lock_master.
+  ENDMETHOD.
+
+  METHOD read.
+    SELECT FROM I_PurchaseOrderAPI01
+      FIELDS PurchaseOrder,
+             PurchaseOrderType,
+             Supplier,
+             CompanyCode,
+             PurchasingOrganization,
+             PurchasingGroup,
+             DocumentCurrency,
+             CreatedByUser,
+             CreationDate,
+             PurchaseOrderDate
+      FOR ALL ENTRIES IN @keys
+      WHERE PurchaseOrder = @keys-PurchaseOrder
+      INTO CORRESPONDING FIELDS OF TABLE @result.
   ENDMETHOD.
 
   METHOD deleteorder.
