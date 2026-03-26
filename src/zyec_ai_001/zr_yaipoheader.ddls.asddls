@@ -1,26 +1,25 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Purchase Order Header - Base View'
+@ObjectModel.usageType: {
+  serviceQuality: #X,
+  sizeCategory: #M,
+  dataClass: #MIXED
+}
 define root view entity ZR_YAIPOHEADER
-  as select from zyai_po_h as h
+  as select from I_PurchaseOrder as po
   composition [0..*] of ZR_YAIPOITEM as _Item
 {
-  key h.pouuid             as PoUUID,
-      h.poid               as PoId,
-      h.supplier           as Supplier,
-      h.status             as Status,
-      @Semantics.amount.currencyCode: 'Currency'
-      h.totalamount        as TotalAmount,
-      h.currency           as Currency,
-      @Semantics.user.createdBy: true
-      h.created_by         as CreatedBy,
-      @Semantics.systemDateTime.createdAt: true
-      h.created_at         as CreatedAt,
-      @Semantics.user.lastChangedBy: true
-      h.last_changed_by    as LastChangedBy,
-      @Semantics.systemDateTime.lastChangedAt: true
-      h.last_changed_at    as LastChangedAt,
-      @Semantics.systemDateTime.localInstanceLastChangedAt: true
-      h.local_last_changed_at as LocalLastChangedAt,
+  key po.PurchaseOrder          as PurchaseOrder,
+      po.PurchaseOrderType      as PurchaseOrderType,
+      po.Supplier               as Supplier,
+      po.CompanyCode            as CompanyCode,
+      po.PurchasingOrganization as PurchasingOrganization,
+      po.PurchasingGroup        as PurchasingGroup,
+      po.DocumentCurrency       as DocumentCurrency,
+      po.CreatedByUser          as CreatedByUser,
+      po.CreationDate           as CreationDate,
+      po.PurchaseOrderDate      as PurchaseOrderDate,
 
       _Item
 }
