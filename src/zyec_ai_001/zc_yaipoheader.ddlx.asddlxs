@@ -5,13 +5,13 @@
     typeNamePlural: 'Purchase Orders',
     title: {
       type: #STANDARD,
-      label: 'PO ID',
-      value: 'PoId'
+      label: 'Purchase Order',
+      value: 'PurchaseOrder'
     }
   },
   presentationVariant: [ {
     sortOrder: [ {
-      by: 'PoId',
+      by: 'CreationDate',
       direction: #DESC
     } ],
     visualizations: [ {
@@ -45,48 +45,48 @@ annotate view ZC_YAIPOHEADER with
   ]
 
   @UI.lineItem: [
-    { position: 10, importance: #HIGH, label: 'PO ID' },
-    { type: #FOR_ACTION, dataAction: 'DeleteOrder', label: 'Delete PO' }
+    { position: 10, importance: #HIGH, label: 'Purchase Order' },
+    { type: #FOR_ACTION, dataAction: 'DeleteOrder', label: 'Log Deletion' }
   ]
-  @UI.identification: [ { position: 10, label: 'PO ID' } ]
+  @UI.identification: [ { position: 10, label: 'Purchase Order' } ]
   @UI.selectionField: [ { position: 10 } ]
-  PoId;
+  PurchaseOrder;
 
-  @UI.lineItem: [ { position: 20, importance: #HIGH, label: 'Supplier' } ]
-  @UI.identification: [ { position: 20, label: 'Supplier' } ]
+  @UI.lineItem: [ { position: 20, importance: #HIGH, label: 'Order Type' } ]
+  @UI.identification: [ { position: 20, label: 'Order Type' } ]
+  PurchaseOrderType;
+
+  @UI.lineItem: [ { position: 30, importance: #HIGH, label: 'Supplier' } ]
+  @UI.identification: [ { position: 30, label: 'Supplier' } ]
   @UI.selectionField: [ { position: 20 } ]
   Supplier;
 
-  @UI.lineItem: [ { position: 30, importance: #MEDIUM, label: 'Status' } ]
-  @UI.identification: [ { position: 30, label: 'Status' } ]
+  @UI.lineItem: [ { position: 40, importance: #MEDIUM, label: 'Company Code' } ]
+  @UI.identification: [ { position: 40, label: 'Company Code' } ]
   @UI.selectionField: [ { position: 30 } ]
-  Status;
+  CompanyCode;
 
-  @UI.lineItem: [ { position: 40, importance: #MEDIUM, label: 'Total Amount' } ]
-  @UI.identification: [ { position: 40, label: 'Total Amount' } ]
-  TotalAmount;
+  @UI.lineItem: [ { position: 50, importance: #MEDIUM, label: 'Purch. Org.' } ]
+  @UI.identification: [ { position: 50, label: 'Purch. Org.' } ]
+  PurchasingOrganization;
 
-  @UI.lineItem: [ { position: 50, importance: #LOW, label: 'Currency' } ]
-  @UI.identification: [ { position: 50, label: 'Currency' } ]
-  Currency;
+  @UI.lineItem: [ { position: 60, importance: #LOW, label: 'Purch. Group' } ]
+  @UI.identification: [ { position: 60, label: 'Purch. Group' } ]
+  PurchasingGroup;
 
-  @UI.lineItem: [ { position: 60, importance: #LOW, label: 'Created By' } ]
-  @UI.identification: [ { position: 60, label: 'Created By' } ]
-  CreatedBy;
+  @UI.lineItem: [ { position: 70, importance: #LOW, label: 'Currency' } ]
+  @UI.identification: [ { position: 70, label: 'Currency' } ]
+  DocumentCurrency;
 
-  @UI.lineItem: [ { position: 70, importance: #LOW, label: 'Created At' } ]
-  @UI.identification: [ { position: 70, label: 'Created At' } ]
-  CreatedAt;
+  @UI.lineItem: [ { position: 80, importance: #LOW, label: 'Created By' } ]
+  @UI.identification: [ { position: 80, label: 'Created By' } ]
+  CreatedByUser;
 
-  @UI.hidden: true
-  PoUUID;
-
-  @UI.hidden: true
-  LastChangedBy;
-
-  @UI.hidden: true
-  LastChangedAt;
+  @UI.lineItem: [ { position: 90, importance: #MEDIUM, label: 'Creation Date' } ]
+  @UI.identification: [ { position: 90, label: 'Creation Date' } ]
+  @UI.selectionField: [ { position: 40 } ]
+  CreationDate;
 
   @UI.hidden: true
-  LocalLastChangedAt;
+  PurchaseOrderDate;
 }

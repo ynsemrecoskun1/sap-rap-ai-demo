@@ -5,8 +5,8 @@
     typeNamePlural: 'PO Items',
     title: {
       type: #STANDARD,
-      label: 'Item ID',
-      value: 'ItemId'
+      label: 'Item',
+      value: 'PurchaseOrderItem'
     }
   }
 }
@@ -28,32 +28,33 @@ annotate view ZC_YAIPOITEM with
     }
   ]
 
-  @UI.lineItem: [ { position: 10, importance: #HIGH, label: 'Item ID' } ]
-  @UI.identification: [ { position: 10, label: 'Item ID' } ]
-  ItemId;
+  @UI.hidden: true
+  PurchaseOrder;
+
+  @UI.lineItem: [ { position: 10, importance: #HIGH, label: 'Item' } ]
+  @UI.identification: [ { position: 10, label: 'Item' } ]
+  PurchaseOrderItem;
 
   @UI.lineItem: [ { position: 20, importance: #HIGH, label: 'Material' } ]
   @UI.identification: [ { position: 20, label: 'Material' } ]
   Material;
 
-  @UI.lineItem: [ { position: 30, importance: #HIGH, label: 'Order Qty' } ]
-  @UI.identification: [ { position: 30, label: 'Order Qty' } ]
-  OrderQty;
+  @UI.lineItem: [ { position: 30, importance: #HIGH, label: 'Description' } ]
+  @UI.identification: [ { position: 30, label: 'Description' } ]
+  PurchaseOrderItemText;
 
-  @UI.lineItem: [ { position: 40, importance: #MEDIUM, label: 'UoM' } ]
-  @UI.identification: [ { position: 40, label: 'UoM' } ]
-  Uom;
+  @UI.lineItem: [ { position: 40, importance: #HIGH, label: 'Order Qty' } ]
+  @UI.identification: [ { position: 40, label: 'Order Qty' } ]
+  OrderQuantity;
 
-  @UI.lineItem: [ { position: 50, importance: #MEDIUM, label: 'Net Price' } ]
-  @UI.identification: [ { position: 50, label: 'Net Price' } ]
-  NetPrice;
+  @UI.lineItem: [ { position: 50, importance: #MEDIUM, label: 'UoM' } ]
+  @UI.identification: [ { position: 50, label: 'UoM' } ]
+  PurchaseOrderQuantityUnit;
 
-  @UI.hidden: true
-  ItemUUID;
-
-  @UI.hidden: true
-  PoUUID;
+  @UI.lineItem: [ { position: 60, importance: #MEDIUM, label: 'Net Price' } ]
+  @UI.identification: [ { position: 60, label: 'Net Price' } ]
+  NetPriceAmount;
 
   @UI.hidden: true
-  LocalLastChangedAt;
+  DocumentCurrency;
 }
