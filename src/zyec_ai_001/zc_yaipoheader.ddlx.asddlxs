@@ -1,0 +1,92 @@
+@Metadata.layer: #CUSTOMER
+@UI: {
+  headerInfo: {
+    typeName: 'Purchase Order',
+    typeNamePlural: 'Purchase Orders',
+    title: {
+      type: #STANDARD,
+      label: 'PO ID',
+      value: 'PoId'
+    }
+  },
+  presentationVariant: [ {
+    sortOrder: [ {
+      by: 'PoId',
+      direction: #DESC
+    } ],
+    visualizations: [ {
+      type: #AS_LINEITEM
+    } ]
+  } ]
+}
+annotate view ZC_YAIPOHEADER with
+{
+  @UI.facet: [
+    {
+      id: 'idHeader',
+      type: #COLLECTION,
+      label: 'Purchase Order',
+      position: 10
+    },
+    {
+      id: 'idGeneralInfo',
+      parentId: 'idHeader',
+      type: #IDENTIFICATION_REFERENCE,
+      label: 'General Information',
+      position: 10
+    },
+    {
+      id: 'idItems',
+      type: #LINEITEM_REFERENCE,
+      label: 'Items',
+      position: 20,
+      targetElement: '_Item'
+    }
+  ]
+
+  @UI.lineItem: [
+    { position: 10, importance: #HIGH, label: 'PO ID' },
+    { type: #FOR_ACTION, dataAction: 'DeleteOrder', label: 'Delete PO' }
+  ]
+  @UI.identification: [ { position: 10, label: 'PO ID' } ]
+  @UI.selectionField: [ { position: 10 } ]
+  PoId;
+
+  @UI.lineItem: [ { position: 20, importance: #HIGH, label: 'Supplier' } ]
+  @UI.identification: [ { position: 20, label: 'Supplier' } ]
+  @UI.selectionField: [ { position: 20 } ]
+  Supplier;
+
+  @UI.lineItem: [ { position: 30, importance: #MEDIUM, label: 'Status' } ]
+  @UI.identification: [ { position: 30, label: 'Status' } ]
+  @UI.selectionField: [ { position: 30 } ]
+  Status;
+
+  @UI.lineItem: [ { position: 40, importance: #MEDIUM, label: 'Total Amount' } ]
+  @UI.identification: [ { position: 40, label: 'Total Amount' } ]
+  TotalAmount;
+
+  @UI.lineItem: [ { position: 50, importance: #LOW, label: 'Currency' } ]
+  @UI.identification: [ { position: 50, label: 'Currency' } ]
+  Currency;
+
+  @UI.lineItem: [ { position: 60, importance: #LOW, label: 'Created By' } ]
+  @UI.identification: [ { position: 60, label: 'Created By' } ]
+  CreatedBy;
+
+  @UI.lineItem: [ { position: 70, importance: #LOW, label: 'Created At' } ]
+  @UI.identification: [ { position: 70, label: 'Created At' } ]
+  CreatedAt;
+
+  @UI.hidden: true
+  PoUUID;
+
+  @UI.hidden: true
+  LastChangedBy;
+
+  @UI.hidden: true
+  LastChangedAt;
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+}

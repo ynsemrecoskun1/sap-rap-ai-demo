@@ -1,0 +1,5 @@
+@EndUserText.label: 'Purchase Order Service Definition'
+define service ZYAI_PO_SD {
+  expose ZC_YAIPOHEADER as PurchaseOrder;
+  expose ZC_YAIPOITEM   as PurchaseOrderItem;
+}
