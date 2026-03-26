@@ -52,10 +52,6 @@ annotate view ZC_YAIPOHEADER with
   @UI.selectionField: [ { position: 10 } ]
   PurchaseOrder;
 
-  @UI.lineItem: [ { position: 20, importance: #HIGH, label: 'Order Type' } ]
-  @UI.identification: [ { position: 20, label: 'Order Type' } ]
-  PurchaseOrderType;
-
   @UI.lineItem: [ { position: 30, importance: #HIGH, label: 'Supplier' } ]
   @UI.identification: [ { position: 30, label: 'Supplier' } ]
   @UI.selectionField: [ { position: 20 } ]

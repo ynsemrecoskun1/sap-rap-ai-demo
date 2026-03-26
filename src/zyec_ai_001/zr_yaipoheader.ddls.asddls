@@ -13,7 +13,6 @@ define root view entity ZR_YAIPOHEADER
   composition [0..*] of ZR_YAIPOITEM as _Item
 {
   key po.PurchaseOrder          as PurchaseOrder,
-      po.PurchaseOrderType      as PurchaseOrderType,
       po.Supplier               as Supplier,
       po.CompanyCode            as CompanyCode,
       po.PurchasingOrganization as PurchasingOrganization,

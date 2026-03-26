@@ -33,7 +33,6 @@ CLASS lhc_poheader IMPLEMENTATION.
       LEFT OUTER JOIN zyai_po_log AS log
         ON po~PurchaseOrder = log~purchaseorder
       FIELDS po~PurchaseOrder,
-             po~PurchaseOrderType,
              po~Supplier,
              po~CompanyCode,
              po~PurchasingOrganization,

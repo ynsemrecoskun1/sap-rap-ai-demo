@@ -7,7 +7,6 @@ define root view entity ZC_YAIPOHEADER
   as projection on ZR_YAIPOHEADER
 {
   key PurchaseOrder,
-      PurchaseOrderType,
       Supplier,
       CompanyCode,
       PurchasingOrganization,
