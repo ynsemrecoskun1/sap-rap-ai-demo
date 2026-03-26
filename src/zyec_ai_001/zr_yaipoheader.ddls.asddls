@@ -8,6 +8,8 @@
 }
 define root view entity ZR_YAIPOHEADER
   as select from I_PurchaseOrderAPI01 as po
+  left outer join zyai_po_log as log
+    on po.PurchaseOrder = log.purchaseorder
   composition [0..*] of ZR_YAIPOITEM as _Item
 {
   key po.PurchaseOrder          as PurchaseOrder,
@@ -20,6 +22,16 @@ define root view entity ZR_YAIPOHEADER
       po.CreatedByUser          as CreatedByUser,
       po.CreationDate           as CreationDate,
       po.PurchaseOrderDate      as PurchaseOrderDate,
+
+      case when log.purchaseorder is not initial
+        then 'X'
+        else ''
+      end                       as IsDeleted,
+
+      case when log.purchaseorder is not initial
+        then 1
+        else 3
+      end                       as DeletionCriticality,
 
       _Item
 }

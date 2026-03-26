@@ -22,19 +22,23 @@ CLASS lhc_poheader IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD read.
-    SELECT FROM I_PurchaseOrderAPI01
-      FIELDS PurchaseOrder,
-             PurchaseOrderType,
-             Supplier,
-             CompanyCode,
-             PurchasingOrganization,
-             PurchasingGroup,
-             DocumentCurrency,
-             CreatedByUser,
-             CreationDate,
-             PurchaseOrderDate
+    SELECT FROM I_PurchaseOrderAPI01 AS po
+      LEFT OUTER JOIN zyai_po_log AS log
+        ON po~PurchaseOrder = log~purchaseorder
+      FIELDS po~PurchaseOrder,
+             po~PurchaseOrderType,
+             po~Supplier,
+             po~CompanyCode,
+             po~PurchasingOrganization,
+             po~PurchasingGroup,
+             po~DocumentCurrency,
+             po~CreatedByUser,
+             po~CreationDate,
+             po~PurchaseOrderDate,
+             CASE WHEN log~purchaseorder IS NOT NULL THEN 'X' ELSE '' END AS IsDeleted,
+             CASE WHEN log~purchaseorder IS NOT NULL THEN 1 ELSE 3 END AS DeletionCriticality
       FOR ALL ENTRIES IN @keys
-      WHERE PurchaseOrder = @keys-PurchaseOrder
+      WHERE po~PurchaseOrder = @keys-PurchaseOrder
       INTO CORRESPONDING FIELDS OF TABLE @result.
   ENDMETHOD.
 

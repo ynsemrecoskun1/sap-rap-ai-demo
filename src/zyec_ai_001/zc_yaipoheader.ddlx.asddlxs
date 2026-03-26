@@ -45,7 +45,7 @@ annotate view ZC_YAIPOHEADER with
   ]
 
   @UI.lineItem: [
-    { position: 10, importance: #HIGH, label: 'Purchase Order' },
+    { position: 10, importance: #HIGH, label: 'Purchase Order', criticality: 'DeletionCriticality' },
     { type: #FOR_ACTION, dataAction: 'DeleteOrder', label: 'Log Deletion' }
   ]
   @UI.identification: [ { position: 10, label: 'Purchase Order' } ]
@@ -86,6 +86,13 @@ annotate view ZC_YAIPOHEADER with
   @UI.identification: [ { position: 90, label: 'Creation Date' } ]
   @UI.selectionField: [ { position: 40 } ]
   CreationDate;
+
+  @UI.lineItem: [ { position: 100, importance: #HIGH, label: 'Deleted', criticality: 'DeletionCriticality', criticalityRepresentation: #WITH_ICON } ]
+  @UI.identification: [ { position: 100, label: 'Deleted' } ]
+  IsDeleted;
+
+  @UI.hidden: true
+  DeletionCriticality;
 
   @UI.hidden: true
   PurchaseOrderDate;
