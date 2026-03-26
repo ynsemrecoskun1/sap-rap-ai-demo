@@ -56,6 +56,7 @@ CLASS lhc_poheader IMPLEMENTATION.
     ENDIF.
 
     GET TIME STAMP FIELD DATA(lv_ts).
+    DATA lt_log TYPE TABLE OF zyai_po_log.
 
     LOOP AT lt_pos INTO DATA(ls_po).
       APPEND VALUE zyai_po_log(
@@ -65,8 +66,17 @@ CLASS lhc_poheader IMPLEMENTATION.
         companycode   = ls_po-companycode
         deleted_at    = lv_ts
         deleted_by    = cl_abap_context_info=>get_user_alias( )
-      ) TO lsc_zr_yaipoheader=>mt_log_buffer.
+      ) TO lt_log.
     ENDLOOP.
+
+    cl_abap_tx=>uncontrolled(
+      EXPORTING
+        restrict_to_action = abap_false
+      IMPORTING
+        handle             = DATA(lo_handle)
+    ).
+    INSERT zyai_po_log FROM TABLE @lt_log.
+    lo_handle->finish( ).
 
     LOOP AT lt_pos INTO DATA(ls_po_result).
       APPEND VALUE #( %tky   = ls_po_result-%tky
@@ -76,30 +86,6 @@ CLASS lhc_poheader IMPLEMENTATION.
                                severity = if_abap_behv_message=>severity-success
                                text     = |PO { ls_po_result-purchaseorder } logged for deletion| ) ) TO reported-poheader.
     ENDLOOP.
-  ENDMETHOD.
-
-ENDCLASS.
-
-
-CLASS lsc_zr_yaipoheader DEFINITION INHERITING FROM cl_abap_behavior_saver.
-  PUBLIC SECTION.
-    CLASS-DATA mt_log_buffer TYPE TABLE OF zyai_po_log.
-  PROTECTED SECTION.
-    METHODS save_modified REDEFINITION.
-    METHODS cleanup         REDEFINITION.
-ENDCLASS.
-
-CLASS lsc_zr_yaipoheader IMPLEMENTATION.
-
-  METHOD save_modified.
-    IF mt_log_buffer IS NOT INITIAL.
-      INSERT zyai_po_log FROM TABLE @mt_log_buffer.
-      CLEAR mt_log_buffer.
-    ENDIF.
-  ENDMETHOD.
-
-  METHOD cleanup.
-    CLEAR mt_log_buffer.
   ENDMETHOD.
 
 ENDCLASS.
