@@ -85,13 +85,14 @@ CLASS lsc_zr_yaipoheader DEFINITION INHERITING FROM cl_abap_behavior_saver.
   PUBLIC SECTION.
     CLASS-DATA mt_log_buffer TYPE TABLE OF zyai_po_log.
   PROTECTED SECTION.
-    METHODS save_modified REDEFINITION.
-    METHODS cleanup         REDEFINITION.
+    METHODS save             REDEFINITION.
+    METHODS cleanup          REDEFINITION.
+    METHODS cleanup_finalize REDEFINITION.
 ENDCLASS.
 
 CLASS lsc_zr_yaipoheader IMPLEMENTATION.
 
-  METHOD save_modified.
+  METHOD save.
     IF mt_log_buffer IS NOT INITIAL.
       INSERT zyai_po_log FROM TABLE @mt_log_buffer.
       CLEAR mt_log_buffer.
@@ -99,6 +100,10 @@ CLASS lsc_zr_yaipoheader IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD cleanup.
+    CLEAR mt_log_buffer.
+  ENDMETHOD.
+
+  METHOD cleanup_finalize.
     CLEAR mt_log_buffer.
   ENDMETHOD.
 
