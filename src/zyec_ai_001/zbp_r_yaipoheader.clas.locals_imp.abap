@@ -29,9 +29,12 @@ CLASS lhc_poheader IMPLEMENTATION.
     DATA lt_po_range TYPE RANGE OF i_purchaseorderapi01-PurchaseOrder.
     lt_po_range = VALUE #( FOR key IN keys ( sign = 'I' option = 'EQ' low = key-PurchaseOrder ) ).
 
+    DATA lt_log_pos TYPE TABLE OF zyai_po_log-purchaseorder.
+
+    SELECT purchaseorder FROM zyai_po_log
+      INTO TABLE @lt_log_pos.
+
     SELECT FROM I_PurchaseOrderAPI01 AS po
-      LEFT OUTER JOIN zyai_po_log AS log
-        ON po~PurchaseOrder = log~purchaseorder
       FIELDS po~PurchaseOrder,
              po~Supplier,
              po~CompanyCode,
@@ -40,10 +43,17 @@ CLASS lhc_poheader IMPLEMENTATION.
              po~DocumentCurrency,
              po~CreatedByUser,
              po~CreationDate,
-             po~PurchaseOrderDate,
-             CASE WHEN log~purchaseorder IS NOT NULL THEN 'X' ELSE ' ' END AS IsDeleted
+             po~PurchaseOrderDate
       WHERE po~PurchaseOrder IN @lt_po_range
       INTO CORRESPONDING FIELDS OF TABLE @result.
+
+    LOOP AT result ASSIGNING FIELD-SYMBOL(<ls_result>).
+      IF line_exists( lt_log_pos[ table_line = <ls_result>-PurchaseOrder ] ).
+        <ls_result>-IsDeleted = 'X'.
+      ELSE.
+        <ls_result>-IsDeleted = ' '.
+      ENDIF.
+    ENDLOOP.
   ENDMETHOD.
 
   METHOD deleteorder.
