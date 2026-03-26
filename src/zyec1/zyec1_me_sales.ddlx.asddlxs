@@ -6,28 +6,28 @@
 annotate view zyec1_pv_sales with
 {
   @UI.lineItem: [
-    { position: 10, label: 'Sales Order' },
-    { type: #FOR_ACTION, dataAction: 'showOrder', label: 'Show Order', position: 20 }
+    { position: 10, label: 'Sales Order', importance: #HIGH },
+    { type: #FOR_ACTION, dataAction: 'showOrder', label: 'Show Order' }
   ]
   @UI.selectionField: [{ position: 10 }]
   SalesOrder;
 
-  @UI.lineItem: [{ position: 30, label: 'Order Type' }]
+  @UI.lineItem: [{ position: 20, label: 'Order Type', importance: #MEDIUM }]
   @UI.selectionField: [{ position: 20 }]
   SalesOrderType;
 
-  @UI.lineItem: [{ position: 40, label: 'Sales Org.' }]
+  @UI.lineItem: [{ position: 30, label: 'Sales Org.', importance: #MEDIUM }]
   SalesOrganization;
 
-  @UI.lineItem: [{ position: 50, label: 'Sold To Party' }]
+  @UI.lineItem: [{ position: 40, label: 'Sold To Party', importance: #HIGH }]
   @UI.selectionField: [{ position: 30 }]
   SoldToParty;
 
-  @UI.lineItem: [{ position: 60, label: 'Creation Date' }]
+  @UI.lineItem: [{ position: 50, label: 'Creation Date', importance: #MEDIUM }]
   @UI.selectionField: [{ position: 40 }]
   CreationDate;
 
-  @UI.lineItem: [{ position: 70, label: 'Net Amount' }]
+  @UI.lineItem: [{ position: 60, label: 'Net Amount', importance: #MEDIUM }]
   TotalNetAmount;
 
   @UI.hidden: true
