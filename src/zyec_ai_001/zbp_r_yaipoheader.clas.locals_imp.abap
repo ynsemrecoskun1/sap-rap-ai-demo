@@ -21,16 +21,16 @@ CLASS lhc_poheader IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD get_instance_features.
-    DATA lt_po_range TYPE RANGE OF zyai_po_log-purchaseorder.
-    lt_po_range = VALUE #( FOR key IN keys ( sign = 'I' option = 'EQ' low = key-PurchaseOrder ) ).
+    READ ENTITIES OF zr_yaipoheader IN LOCAL MODE
+      ENTITY poheader
+        FIELDS ( IsDeleted )
+        WITH CORRESPONDING #( keys )
+      RESULT DATA(lt_pos)
+      FAILED DATA(lt_failed).
 
-    SELECT purchaseorder FROM zyai_po_log
-      WHERE purchaseorder IN @lt_po_range
-      INTO TABLE @DATA(lt_logged).
-
-    result = VALUE #( FOR key IN keys
-      ( %tky                = key-%tky
-        %action-deleteorder = COND #( WHEN line_exists( lt_logged[ purchaseorder = key-PurchaseOrder ] )
+    result = VALUE #( FOR ls_po IN lt_pos
+      ( %tky                = ls_po-%tky
+        %action-deleteorder = COND #( WHEN ls_po-IsDeleted = 'X'
                                       THEN if_abap_behv=>fc-o-disabled
                                       ELSE if_abap_behv=>fc-o-enabled ) ) ).
   ENDMETHOD.
@@ -47,6 +47,8 @@ CLASS lhc_poheader IMPLEMENTATION.
     lt_po_range = VALUE #( FOR key IN keys ( sign = 'I' option = 'EQ' low = key-PurchaseOrder ) ).
 
     SELECT FROM I_PurchaseOrderAPI01 AS po
+      LEFT OUTER JOIN zyai_po_log AS log
+        ON po~PurchaseOrder = log~purchaseorder
       FIELDS po~PurchaseOrder,
              po~Supplier,
              po~CompanyCode,
@@ -55,9 +57,22 @@ CLASS lhc_poheader IMPLEMENTATION.
              po~DocumentCurrency,
              po~CreatedByUser,
              po~CreationDate,
-             po~PurchaseOrderDate
+             po~PurchaseOrderDate,
+             log~purchaseorder AS log_po
       WHERE po~PurchaseOrder IN @lt_po_range
-      INTO CORRESPONDING FIELDS OF TABLE @result.
+      INTO TABLE @DATA(lt_result).
+
+    result = VALUE #( FOR ls IN lt_result
+      ( PurchaseOrder        = ls-PurchaseOrder
+        Supplier             = ls-Supplier
+        CompanyCode          = ls-CompanyCode
+        PurchasingOrganization = ls-PurchasingOrganization
+        PurchasingGroup      = ls-PurchasingGroup
+        DocumentCurrency     = ls-DocumentCurrency
+        CreatedByUser        = ls-CreatedByUser
+        CreationDate         = ls-CreationDate
+        PurchaseOrderDate    = ls-PurchaseOrderDate
+        IsDeleted            = COND #( WHEN ls-log_po IS NOT INITIAL THEN 'X' ELSE ' ' ) ) ).
   ENDMETHOD.
 
   METHOD deleteorder.
