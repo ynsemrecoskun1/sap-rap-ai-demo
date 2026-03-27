@@ -43,36 +43,22 @@ CLASS lhc_poheader IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    DATA lt_po_range TYPE RANGE OF i_purchaseorderapi01-PurchaseOrder.
+    DATA lt_po_range TYPE RANGE OF zr_yaipoheader-PurchaseOrder.
     lt_po_range = VALUE #( FOR key IN keys ( sign = 'I' option = 'EQ' low = key-PurchaseOrder ) ).
 
-    SELECT FROM I_PurchaseOrderAPI01 AS po
-      LEFT OUTER JOIN zyai_po_log AS log
-        ON po~PurchaseOrder = log~purchaseorder
-      FIELDS po~PurchaseOrder,
-             po~Supplier,
-             po~CompanyCode,
-             po~PurchasingOrganization,
-             po~PurchasingGroup,
-             po~DocumentCurrency,
-             po~CreatedByUser,
-             po~CreationDate,
-             po~PurchaseOrderDate,
-             log~purchaseorder AS log_po
-      WHERE po~PurchaseOrder IN @lt_po_range
-      INTO TABLE @DATA(lt_result).
-
-    result = VALUE #( FOR ls IN lt_result
-      ( PurchaseOrder        = ls-PurchaseOrder
-        Supplier             = ls-Supplier
-        CompanyCode          = ls-CompanyCode
-        PurchasingOrganization = ls-PurchasingOrganization
-        PurchasingGroup      = ls-PurchasingGroup
-        DocumentCurrency     = ls-DocumentCurrency
-        CreatedByUser        = ls-CreatedByUser
-        CreationDate         = ls-CreationDate
-        PurchaseOrderDate    = ls-PurchaseOrderDate
-        IsDeleted            = COND #( WHEN ls-log_po IS NOT INITIAL THEN 'X' ELSE ' ' ) ) ).
+    SELECT FROM zr_yaipoheader
+      FIELDS PurchaseOrder,
+             Supplier,
+             CompanyCode,
+             PurchasingOrganization,
+             PurchasingGroup,
+             DocumentCurrency,
+             CreatedByUser,
+             CreationDate,
+             PurchaseOrderDate,
+             IsDeleted
+      WHERE PurchaseOrder IN @lt_po_range
+      INTO CORRESPONDING FIELDS OF TABLE @result.
   ENDMETHOD.
 
   METHOD deleteorder.
