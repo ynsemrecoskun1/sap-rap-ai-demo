@@ -21,18 +21,18 @@ CLASS lhc_poheader IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD get_instance_features.
-    READ ENTITIES OF zr_yaipoheader IN LOCAL MODE
-      ENTITY poheader
-        FIELDS ( IsDeleted )
-        WITH CORRESPONDING #( keys )
-      RESULT DATA(lt_pos)
-      FAILED DATA(lt_failed).
+    DATA lt_po_range TYPE RANGE OF zyai_po_log-purchaseorder.
+    lt_po_range = VALUE #( FOR key IN keys ( sign = 'I' option = 'EQ' low = key-PurchaseOrder ) ).
 
-    result = VALUE #( FOR ls_po IN lt_pos
-      ( %tky                  = ls_po-%tky
-        %action-deleteorder   = COND #( WHEN ls_po-IsDeleted = 'X'
-                                        THEN if_abap_behv=>fc-o-disabled
-                                        ELSE if_abap_behv=>fc-o-enabled ) ) ).
+    SELECT purchaseorder FROM zyai_po_log
+      WHERE purchaseorder IN @lt_po_range
+      INTO TABLE @DATA(lt_logged).
+
+    result = VALUE #( FOR key IN keys
+      ( %tky                = key-%tky
+        %action-deleteorder = COND #( WHEN line_exists( lt_logged[ purchaseorder = key-PurchaseOrder ] )
+                                      THEN if_abap_behv=>fc-o-disabled
+                                      ELSE if_abap_behv=>fc-o-enabled ) ) ).
   ENDMETHOD.
 
   METHOD lock_master.
