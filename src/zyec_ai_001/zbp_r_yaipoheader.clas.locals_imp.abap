@@ -64,8 +64,7 @@ CLASS lhc_poheader IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD createpo.
-    DATA ls_param TYPE STRUCTURE FOR ACTION IMPORT poheader~createpo.
-    READ TABLE keys INTO ls_param INDEX 1.
+    READ TABLE keys INTO DATA(ls_key) INDEX 1.
 
     MODIFY ENTITIES OF i_purchaseordertp
       ENTITY purchaseorder
@@ -74,31 +73,27 @@ CLASS lhc_poheader IMPLEMENTATION.
                         CompanyCode
                         PurchasingOrganization
                         PurchasingGroup )
-        WITH VALUE #( ( %cid                  = 'CID_NEW_PO'
-                        PurchaseOrderType     = ls_param-%param-OrderType
-                        Supplier              = ls_param-%param-Supplier
-                        CompanyCode           = ls_param-%param-CompanyCode
-                        PurchasingOrganization = ls_param-%param-PurchasingOrganization
-                        PurchasingGroup       = ls_param-%param-PurchasingGroup ) )
+        WITH VALUE #( ( %cid                   = 'CID_NEW_PO'
+                        PurchaseOrderType      = ls_key-%param-OrderType
+                        Supplier               = ls_key-%param-Supplier
+                        CompanyCode            = ls_key-%param-CompanyCode
+                        PurchasingOrganization = ls_key-%param-PurchasingOrganization
+                        PurchasingGroup        = ls_key-%param-PurchasingGroup ) )
       REPORTED DATA(lt_reported)
       FAILED DATA(lt_failed)
       MAPPED DATA(lt_mapped).
 
     IF lt_failed IS NOT INITIAL.
-      APPEND VALUE #( %cid = ls_param-%cid
-                      %msg = new_message_with_text(
+      APPEND VALUE #( %msg = new_message_with_text(
                                severity = if_abap_behv_message=>severity-error
                                text     = 'Purchase Order could not be created' ) )
         TO reported-poheader.
       RETURN.
     ENDIF.
 
-    DATA(ls_new_po) = lt_mapped-purchaseorder[ 1 ].
-
-    APPEND VALUE #( %cid   = ls_param-%cid
-                    %msg   = new_message_with_text(
-                               severity = if_abap_behv_message=>severity-success
-                               text     = |Purchase Order created successfully| ) )
+    APPEND VALUE #( %msg = new_message_with_text(
+                             severity = if_abap_behv_message=>severity-success
+                             text     = 'Purchase Order created successfully' ) )
       TO reported-poheader.
   ENDMETHOD.
 
