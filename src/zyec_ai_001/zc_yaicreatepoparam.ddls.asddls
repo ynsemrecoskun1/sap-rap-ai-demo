@@ -1,10 +1,9 @@
 @EndUserText.label: 'Create PO - Action Parameter'
-@MappingRole: true
 define abstract entity ZC_YAICREATEPOPARAM
 {
-  OrderType             : purchaseordertype;
-  Supplier              : lifnr;
-  CompanyCode           : bukrs;
-  PurchasingOrganization: ekorg;
-  PurchasingGroup       : bkgrp;
+  OrderType             : abap.char( 4 );
+  Supplier              : abap.char( 10 );
+  CompanyCode           : abap.char( 4 );
+  PurchasingOrganization: abap.char( 4 );
+  PurchasingGroup       : abap.char( 3 );
 }
