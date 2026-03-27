@@ -66,24 +66,20 @@ CLASS lhc_poheader IMPLEMENTATION.
   METHOD createpo.
     READ TABLE keys INTO DATA(ls_key) INDEX 1.
 
-    MODIFY ENTITIES OF i_purchaseordertp
-      ENTITY purchaseorder
-        CREATE FIELDS ( PurchaseOrderType
-                        Supplier
-                        CompanyCode
-                        PurchasingOrganization
-                        PurchasingGroup )
-        WITH VALUE #( ( %cid                   = 'CID_NEW_PO'
-                        PurchaseOrderType      = ls_key-%param-OrderType
-                        Supplier               = ls_key-%param-Supplier
-                        CompanyCode            = ls_key-%param-CompanyCode
-                        PurchasingOrganization = ls_key-%param-PurchasingOrganization
-                        PurchasingGroup        = ls_key-%param-PurchasingGroup ) )
-      REPORTED DATA(lt_reported)
-      FAILED DATA(lt_failed)
-      MAPPED DATA(lt_mapped).
+    DATA(lo_po) = cl_mmpur_po_api=>create_instance( ).
 
-    IF lt_failed IS NOT INITIAL.
+    lo_po->set_header_fields(
+      EXPORTING
+        is_header = VALUE mmpur_s_po_header(
+                      bsart = ls_key-%param-OrderType
+                      lifnr = ls_key-%param-Supplier
+                      bukrs = ls_key-%param-CompanyCode
+                      ekorg = ls_key-%param-PurchasingOrganization
+                      ekgrp = ls_key-%param-PurchasingGroup ) ).
+
+    DATA(lv_po_number) = lo_po->save( ).
+
+    IF lv_po_number IS INITIAL.
       APPEND VALUE #( %msg = new_message_with_text(
                                severity = if_abap_behv_message=>severity-error
                                text     = 'Purchase Order could not be created' ) )
@@ -93,7 +89,7 @@ CLASS lhc_poheader IMPLEMENTATION.
 
     APPEND VALUE #( %msg = new_message_with_text(
                              severity = if_abap_behv_message=>severity-success
-                             text     = 'Purchase Order created successfully' ) )
+                             text     = |Purchase Order { lv_po_number } created| ) )
       TO reported-poheader.
   ENDMETHOD.
 
