@@ -83,12 +83,11 @@ annotate view ZC_YAIPOHEADER with
   @UI.selectionField: [ { position: 40 } ]
   CreationDate;
 
-  @UI.lineItem: [ { position: 100, importance: #HIGH, label: 'Deleted' } ]
-  @UI.identification: [ { position: 100, label: 'Deleted' } ]
+  @UI.lineItem: [ { position: 100, importance: #HIGH, label: 'Deleted', criticality: 'DeletionCriticality', criticalityRepresentation: #WITH_ICON } ]
+  @UI.identification: [ { position: 100, label: 'Deleted', criticality: 'DeletionCriticality', criticalityRepresentation: #WITH_ICON } ]
   IsDeleted;
 
-  @UI.lineItem: [ { position: 110, importance: #HIGH, label: 'Status', criticality: 'DeletionCriticality', criticalityRepresentation: #WITH_ICON } ]
-  @UI.identification: [ { position: 110, label: 'Status', criticality: 'DeletionCriticality', criticalityRepresentation: #WITH_ICON } ]
+  @UI.hidden: true
   DeletionCriticality;
 
   @UI.hidden: true
