@@ -46,6 +46,7 @@ annotate view ZC_YAIPOHEADER with
 
   @UI.lineItem: [
     { position: 10, importance: #HIGH, label: 'Purchase Order' },
+    { type: #FOR_ACTION, dataAction: 'CreatePO', invocationGrouping: #ISOLATED, label: 'Create PO' },
     { type: #FOR_ACTION, dataAction: 'DeleteOrder', label: 'Log Deletion' }
   ]
   @UI.identification: [ { position: 10, label: 'Purchase Order' } ]

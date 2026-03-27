@@ -11,6 +11,8 @@ CLASS lhc_poheader DEFINITION INHERITING FROM cl_abap_behavior_handler.
         IMPORTING keys FOR LOCK poheader,
       read FOR READ
         IMPORTING keys FOR READ poheader RESULT result,
+      createpo FOR MODIFY
+        IMPORTING keys FOR ACTION poheader~createpo RESULT result,
       deleteorder FOR MODIFY
         IMPORTING keys FOR ACTION poheader~deleteorder RESULT result.
 ENDCLASS.
@@ -59,6 +61,45 @@ CLASS lhc_poheader IMPLEMENTATION.
              IsDeleted
       WHERE PurchaseOrder IN @lt_po_range
       INTO CORRESPONDING FIELDS OF TABLE @result.
+  ENDMETHOD.
+
+  METHOD createpo.
+    DATA ls_param TYPE STRUCTURE FOR ACTION IMPORT poheader~createpo.
+    READ TABLE keys INTO ls_param INDEX 1.
+
+    MODIFY ENTITIES OF i_purchaseordertp
+      ENTITY purchaseorder
+        CREATE FIELDS ( PurchaseOrderType
+                        Supplier
+                        CompanyCode
+                        PurchasingOrganization
+                        PurchasingGroup )
+        WITH VALUE #( ( %cid                  = 'CID_NEW_PO'
+                        PurchaseOrderType     = ls_param-%param-OrderType
+                        Supplier              = ls_param-%param-Supplier
+                        CompanyCode           = ls_param-%param-CompanyCode
+                        PurchasingOrganization = ls_param-%param-PurchasingOrganization
+                        PurchasingGroup       = ls_param-%param-PurchasingGroup ) )
+      REPORTED DATA(lt_reported)
+      FAILED DATA(lt_failed)
+      MAPPED DATA(lt_mapped).
+
+    IF lt_failed IS NOT INITIAL.
+      APPEND VALUE #( %cid = ls_param-%cid
+                      %msg = new_message_with_text(
+                               severity = if_abap_behv_message=>severity-error
+                               text     = 'Purchase Order could not be created' ) )
+        TO reported-poheader.
+      RETURN.
+    ENDIF.
+
+    DATA(ls_new_po) = lt_mapped-purchaseorder[ 1 ].
+
+    APPEND VALUE #( %cid   = ls_param-%cid
+                    %msg   = new_message_with_text(
+                               severity = if_abap_behv_message=>severity-success
+                               text     = |Purchase Order created successfully| ) )
+      TO reported-poheader.
   ENDMETHOD.
 
   METHOD deleteorder.

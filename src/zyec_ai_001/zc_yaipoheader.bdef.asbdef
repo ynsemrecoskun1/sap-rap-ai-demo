@@ -4,6 +4,7 @@ strict ( 2 );
 define behavior for ZC_YAIPOHEADER alias poheader
 use etag
 {
+  use action CreatePO;
   use action DeleteOrder;
 
   use association _Item;
