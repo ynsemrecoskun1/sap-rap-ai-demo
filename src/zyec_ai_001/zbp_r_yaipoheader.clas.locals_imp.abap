@@ -5,6 +5,8 @@ CLASS lhc_poheader DEFINITION INHERITING FROM cl_abap_behavior_handler.
     METHODS:
       get_global_authorizations FOR GLOBAL AUTHORIZATION
         IMPORTING REQUEST requested_authorizations FOR poheader RESULT result,
+      get_instance_features FOR INSTANCE FEATURES
+        IMPORTING keys REQUEST requested_features FOR poheader RESULT result,
       lock_master FOR LOCK
         IMPORTING keys FOR LOCK poheader,
       read FOR READ
@@ -16,6 +18,21 @@ ENDCLASS.
 CLASS lhc_poheader IMPLEMENTATION.
 
   METHOD get_global_authorizations.
+  ENDMETHOD.
+
+  METHOD get_instance_features.
+    READ ENTITIES OF zr_yaipoheader IN LOCAL MODE
+      ENTITY poheader
+        FIELDS ( IsDeleted )
+        WITH CORRESPONDING #( keys )
+      RESULT DATA(lt_pos)
+      FAILED DATA(lt_failed).
+
+    result = VALUE #( FOR ls_po IN lt_pos
+      ( %tky                  = ls_po-%tky
+        %action-deleteorder   = COND #( WHEN ls_po-IsDeleted = 'X'
+                                        THEN if_abap_behv=>fc-o-disabled
+                                        ELSE if_abap_behv=>fc-o-enabled ) ) ).
   ENDMETHOD.
 
   METHOD lock_master.

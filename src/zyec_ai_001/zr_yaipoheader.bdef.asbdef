@@ -7,7 +7,7 @@ authorization master ( global )
 {
   field ( readonly ) PurchaseOrder;
 
-  action DeleteOrder result [1] $self;
+  action ( features : instance ) DeleteOrder result [1] $self;
 
   association _Item;
 }
