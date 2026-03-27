@@ -26,7 +26,7 @@ define root view entity ZR_YAIPOHEADER
       cast( case when log.purchaseorder is not initial
         then 'X'
         else ' '
-      end as abap.char1 )       as IsDeleted,
+      end as abap.char( 1 ) )    as IsDeleted,
 
       _Item
 }
