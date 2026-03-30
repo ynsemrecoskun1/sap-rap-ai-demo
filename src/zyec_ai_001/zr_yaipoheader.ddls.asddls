@@ -20,7 +20,7 @@ define root view entity ZR_YAIPOHEADER
       po.CreationDate           as CreationDate,
       po.PurchaseOrderDate      as PurchaseOrderDate,
 
-      cast( 'PO' as abap.char( 2 ) ) as ImageUrl,
+      cast( 'sap-icon://calendar' as abap.char( 255 ) ) as ImageUrl,
 
       cast( case when exists (
               select 1 from zyai_po_log as log
