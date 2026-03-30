@@ -6,7 +6,7 @@
   typeName: 'Purchase Order',
   typeNamePlural: 'Purchase Orders',
   title: { type: #STANDARD, label: 'Purchase Order', value: 'PurchaseOrder' },
-  imageUrl: 'ImageUrl'
+  initials: 'ImageUrl'
 }
 define root view entity ZC_YAIPOHEADER
   provider contract transactional_query
