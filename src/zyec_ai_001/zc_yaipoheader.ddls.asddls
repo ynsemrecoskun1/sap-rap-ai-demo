@@ -2,6 +2,12 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Purchase Order Header - Projection View'
 @Metadata.allowExtensions: true
+@UI.headerInfo: {
+  typeName: 'Purchase Order',
+  typeNamePlural: 'Purchase Orders',
+  title: { type: #STANDARD, label: 'Purchase Order', value: 'PurchaseOrder' },
+  imageUrl: 'ImageUrl'
+}
 define root view entity ZC_YAIPOHEADER
   provider contract transactional_query
   as projection on ZR_YAIPOHEADER
@@ -15,6 +21,7 @@ define root view entity ZC_YAIPOHEADER
       CreatedByUser,
       CreationDate,
       PurchaseOrderDate,
+      @Semantics.imageUrl: true
       ImageUrl,
       IsDeleted,
       DeletionCriticality,

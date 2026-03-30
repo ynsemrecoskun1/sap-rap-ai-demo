@@ -1,15 +1,5 @@
 @Metadata.layer: #CUSTOMER
 @UI: {
-  headerInfo: {
-    typeName: 'Purchase Order',
-    typeNamePlural: 'Purchase Orders',
-    title: {
-      type: #STANDARD,
-      label: 'Purchase Order',
-      value: 'PurchaseOrder'
-    },
-    imageUrl: 'ImageUrl'
-  },
   presentationVariant: [ {
     sortOrder: [ {
       by: 'CreationDate',
@@ -92,7 +82,6 @@ annotate view ZC_YAIPOHEADER with
   @UI.hidden: true
   DeletionCriticality;
 
-  @Semantics.imageUrl: true
   @UI.hidden: true
   ImageUrl;
 
