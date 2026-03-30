@@ -7,7 +7,8 @@
       type: #STANDARD,
       label: 'Purchase Order',
       value: 'PurchaseOrder'
-    }
+    },
+    imageUrl: 'ImageUrl'
   },
   presentationVariant: [ {
     sortOrder: [ {
@@ -90,6 +91,10 @@ annotate view ZC_YAIPOHEADER with
 
   @UI.hidden: true
   DeletionCriticality;
+
+  @Semantics.imageUrl: true
+  @UI.hidden: true
+  ImageUrl;
 
   @UI.hidden: true
   PurchaseOrderDate;

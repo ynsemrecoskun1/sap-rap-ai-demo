@@ -20,6 +20,9 @@ define root view entity ZR_YAIPOHEADER
       po.CreationDate           as CreationDate,
       po.PurchaseOrderDate      as PurchaseOrderDate,
 
+      cast( 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/SAP_2011_logo.svg/320px-SAP_2011_logo.svg.png'
+        as abap.char( 255 ) )    as ImageUrl,
+
       cast( case when exists (
               select 1 from zyai_po_log as log
               where log.purchaseorder = po.PurchaseOrder )

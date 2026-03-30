@@ -15,6 +15,7 @@ define root view entity ZC_YAIPOHEADER
       CreatedByUser,
       CreationDate,
       PurchaseOrderDate,
+      ImageUrl,
       IsDeleted,
       DeletionCriticality,
 
