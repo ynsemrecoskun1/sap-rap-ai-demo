@@ -8,19 +8,9 @@
 }
 define root view entity ZR_YAIPOHEADER
   as select from I_PurchaseOrderAPI01 as po
-  left outer join zyai_po_log as log
-    on po.PurchaseOrder = log.purchaseorder
+  left outer join ZI_YAIPODELETED as log
+    on po.PurchaseOrder = log.PurchaseOrder
   composition [0..*] of ZR_YAIPOITEM as _Item
-group by
-  po.PurchaseOrder,
-  po.Supplier,
-  po.CompanyCode,
-  po.PurchasingOrganization,
-  po.PurchasingGroup,
-  po.DocumentCurrency,
-  po.CreatedByUser,
-  po.CreationDate,
-  po.PurchaseOrderDate
 {
   key po.PurchaseOrder          as PurchaseOrder,
       po.Supplier               as Supplier,
@@ -34,12 +24,12 @@ group by
 
       cast( 'sap-icon://calendar' as abap.char( 255 ) ) as ImageUrl,
 
-      cast( case when max( log.purchaseorder ) is not null
+      cast( case when log.PurchaseOrder is not initial
         then 'X'
         else ' '
       end as abap.char( 1 ) )    as IsDeleted,
 
-      cast( case when max( log.purchaseorder ) is not null
+      cast( case when log.PurchaseOrder is not initial
         then 1
         else 3
       end as abap.int1 )         as DeletionCriticality,
