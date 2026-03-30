@@ -91,6 +91,10 @@ CLASS lhc_poheader IMPLEMENTATION.
       RETURN.
     ENDIF.
 
+    DATA(ls_mapped_po) = lt_mapped-purchaseorder[ 1 ].
+    APPEND VALUE #( %cid   = ls_mapped_po-%cid
+                    %param = VALUE #( PurchaseOrder = ls_mapped_po-PurchaseOrder ) ) TO result.
+
     APPEND VALUE #( %msg = new_message_with_text(
                              severity = if_abap_behv_message=>severity-success
                              text     = 'Purchase Order created successfully' ) )
@@ -127,15 +131,13 @@ CLASS lhc_poheader IMPLEMENTATION.
         deleted_at    = lv_ts
         deleted_by    = cl_abap_context_info=>get_user_alias( )
       ) TO lhc_poheader=>mt_log_buffer.
-    ENDLOOP.
 
-    LOOP AT lt_pos INTO DATA(ls_po_result).
-      APPEND VALUE #( %tky   = ls_po_result-%tky
-                      %param = ls_po_result ) TO result.
-      APPEND VALUE #( %tky = ls_po_result-%tky
+      APPEND VALUE #( %tky   = ls_po-%tky
+                      %param = ls_po ) TO result.
+      APPEND VALUE #( %tky = ls_po-%tky
                       %msg = new_message_with_text(
                                severity = if_abap_behv_message=>severity-success
-                               text     = |PO { ls_po_result-purchaseorder } logged for deletion| ) ) TO reported-poheader.
+                               text     = |PO { ls_po-purchaseorder } logged for deletion| ) ) TO reported-poheader.
     ENDLOOP.
   ENDMETHOD.
 

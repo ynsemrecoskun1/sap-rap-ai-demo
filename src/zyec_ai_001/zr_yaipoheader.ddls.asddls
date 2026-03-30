@@ -8,8 +8,6 @@
 }
 define root view entity ZR_YAIPOHEADER
   as select from I_PurchaseOrderAPI01 as po
-  left outer join zyai_po_log as log
-    on po.PurchaseOrder = log.purchaseorder
   composition [0..*] of ZR_YAIPOITEM as _Item
 {
   key po.PurchaseOrder          as PurchaseOrder,
@@ -22,12 +20,16 @@ define root view entity ZR_YAIPOHEADER
       po.CreationDate           as CreationDate,
       po.PurchaseOrderDate      as PurchaseOrderDate,
 
-      cast( case when log.purchaseorder is not initial
+      cast( case when exists (
+              select 1 from zyai_po_log as log
+              where log.purchaseorder = po.PurchaseOrder )
         then 'X'
         else ' '
       end as abap.char( 1 ) )    as IsDeleted,
 
-      cast( case when log.purchaseorder is not initial
+      cast( case when exists (
+              select 1 from zyai_po_log as log
+              where log.purchaseorder = po.PurchaseOrder )
         then 1
         else 3
       end as abap.int1 )         as DeletionCriticality,
