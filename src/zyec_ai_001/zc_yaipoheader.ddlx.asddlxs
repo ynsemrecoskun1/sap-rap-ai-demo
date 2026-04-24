@@ -49,11 +49,6 @@ annotate view ZC_YAIPOHEADER with
   @UI.selectionField: [ { position: 20 } ]
   Supplier;
 
-  @UI.lineItem: [ { position: 35, importance: #HIGH, label: 'Customer' } ]
-  @UI.identification: [ { position: 35, label: 'Customer' } ]
-  @UI.selectionField: [ { position: 25 } ]
-  Customer;
-
   @UI.lineItem: [ { position: 40, importance: #MEDIUM, label: 'Company Code' } ]
   @UI.identification: [ { position: 40, label: 'Company Code' } ]
   @UI.selectionField: [ { position: 30 } ]
