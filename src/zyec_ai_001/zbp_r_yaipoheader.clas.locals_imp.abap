@@ -1,6 +1,4 @@
 CLASS lhc_poheader DEFINITION INHERITING FROM cl_abap_behavior_handler.
-  PUBLIC SECTION.
-    CLASS-DATA mt_log_buffer TYPE TABLE OF zyai_po_log.
   PRIVATE SECTION.
     METHODS:
       get_global_authorizations FOR GLOBAL AUTHORIZATION
@@ -123,14 +121,15 @@ CLASS lhc_poheader IMPLEMENTATION.
     GET TIME STAMP FIELD DATA(lv_ts).
 
     LOOP AT lt_pos INTO DATA(ls_po).
-      APPEND VALUE zyai_po_log(
+      " Insert log entry directly (unmanaged BO - no saver class)
+      INSERT zyai_po_log FROM @( VALUE zyai_po_log(
         log_uuid      = cl_system_uuid=>create_uuid_x16_static( )
         purchaseorder = ls_po-purchaseorder
         supplier      = ls_po-supplier
         companycode   = ls_po-companycode
         deleted_at    = lv_ts
         deleted_by    = cl_abap_context_info=>get_user_alias( )
-      ) TO lhc_poheader=>mt_log_buffer.
+      ) ).
 
       APPEND VALUE #( %tky   = ls_po-%tky
                       %param = ls_po ) TO result.
@@ -139,33 +138,6 @@ CLASS lhc_poheader IMPLEMENTATION.
                                severity = if_abap_behv_message=>severity-success
                                text     = |PO { ls_po-purchaseorder } logged for deletion| ) ) TO reported-poheader.
     ENDLOOP.
-  ENDMETHOD.
-
-ENDCLASS.
-
-
-CLASS lsc_zr_yaipoheader DEFINITION INHERITING FROM cl_abap_behavior_saver.
-  PROTECTED SECTION.
-    METHODS save             REDEFINITION.
-    METHODS cleanup          REDEFINITION.
-    METHODS cleanup_finalize REDEFINITION.
-ENDCLASS.
-
-CLASS lsc_zr_yaipoheader IMPLEMENTATION.
-
-  METHOD save.
-    IF lhc_poheader=>mt_log_buffer IS NOT INITIAL.
-      INSERT zyai_po_log FROM TABLE @lhc_poheader=>mt_log_buffer.
-      CLEAR lhc_poheader=>mt_log_buffer.
-    ENDIF.
-  ENDMETHOD.
-
-  METHOD cleanup.
-    CLEAR lhc_poheader=>mt_log_buffer.
-  ENDMETHOD.
-
-  METHOD cleanup_finalize.
-    CLEAR lhc_poheader=>mt_log_buffer.
   ENDMETHOD.
 
 ENDCLASS.
