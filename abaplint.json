@@ -1,0 +1,55 @@
+{
+  "global": {
+    "files": "/src/**/*.*",
+    "skipGeneratedGatewayClasses": true,
+    "skipGeneratedPersistentClasses": true,
+    "skipGeneratedFunctionGroups": true,
+    "useApackDependencies": false,
+    "enableLanguageServer": true
+  },
+  "dependencies": [
+    {
+      "url": "https://github.com/abaplint/deps",
+      "folder": "/deps",
+      "files": "/src/**/*.*"
+    }
+  ],
+  "syntax": {
+    "version": "v758",
+    "errorNamespace": "^(Z|Y)",
+    "globalConstants": [],
+    "globalMacros": []
+  },
+  "rules": {
+    "when_others_last": true,
+    "unreachable_code": true,
+    "identical_form_names": true,
+    "empty_structure": true,
+    "empty_statement": false,
+    "parser_error": true,
+    "obsolete_statement": {
+      "refresh": true,
+      "compute": true,
+      "add": true,
+      "subtract": true,
+      "multiply": true,
+      "move": true,
+      "divide": true,
+      "requested": true,
+      "occurs": true
+    },
+    "check_syntax": true,
+    "unknown_types": false,
+    "begin_end_names": true,
+    "check_ddic": false,
+    "check_transformation_exists": false,
+    "form_tables_obsolete": true,
+    "implement_methods": false,
+    "local_testclass_location": true,
+    "main_file_contents": true,
+    "rfc_error_handling": false,
+    "start_at_tab": false,
+    "superclass_final": false,
+    "type_form_parameters": true
+  }
+}
