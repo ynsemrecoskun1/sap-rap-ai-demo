@@ -15,8 +15,6 @@ define root view entity ZR_YAIPOHEADER
   key po.PurchaseOrder          as PurchaseOrder,
       po.Supplier               as Supplier,
       po._Supplier.SupplierName as SupplierName,
-      po.Customer               as Customer,
-      po._Customer.CustomerName as CustomerName,
       po.CompanyCode            as CompanyCode,
       po.PurchasingOrganization as PurchasingOrganization,
       po.PurchasingGroup        as PurchasingGroup,

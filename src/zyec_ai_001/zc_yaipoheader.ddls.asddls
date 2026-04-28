@@ -15,8 +15,6 @@ define root view entity ZC_YAIPOHEADER
   key PurchaseOrder,
       Supplier,
       SupplierName,
-      Customer,
-      CustomerName,
       CompanyCode,
       PurchasingOrganization,
       PurchasingGroup,
